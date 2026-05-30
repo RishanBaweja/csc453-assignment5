@@ -1,20 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+
 /* Put shared structs and constants here */
 
 #define SECTOR_SIZE 512
-#define PART_TABLE_OFFSET 0x1BE
-#define PART_TABLE_MAGIC_1 0x55
-#define PART_TABLE_MAGIC_2 0xAA
-#define MINIX_PARTITION_TYPE 0x81
-#define MINIX_MAGIC 0x4D5A
+#define PART_TABLE_OFFSET 0x1BE   /* location of the partition table */
+#define PART_TABLE_MAGIC_1 0x55   /* byte 510 boot sect w/ valid part table */
+#define PART_TABLE_MAGIC_2 0xAA   /* byte 511 boot sect w/ valid part table */
+#define MINIX_PARTITION_TYPE 0x81 /* partition type for Minix */
+#define MINIX_MAGIC 0x4D5A        /* the minix magic number */
+#define MINIX_MAGIC_REVERSED      /* minix magic num on byte-reversed fs */
 #define INODE_SIZE 64
 #define DIRENT_SIZE 64
 #define ROOT_INODE 1
 #define DIRECT_ZONES 7
 
-#
+
+#define FILE_TYPE_MASK 0170000
+#define REGULAR_FILE   0100000
+#define DIRECTORY_FILE 0040000
 
 struct partition_table {
   uint8_t bootind; /* Boot magic number (0x80 if bootable) */
